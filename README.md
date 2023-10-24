@@ -61,7 +61,16 @@
 - исполнить команду;
 - установить / снять блокировку на ресурс памяти
 
-# Полезные ссылки:
+# Полезные ссылки на материалы:  
 [статья на habr](https://habr.com/ru/articles/430680/)  
 [RISC](https://ru.wikipedia.org/wiki/RISC)  
 [CISC](https://ru.wikipedia.org/wiki/CISC)  
+[архитекура MIPS](https://ru.wikipedia.org/wiki/MIPS_(%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0))
+
+# Чужие проекты:  
+https://github.com/i1i1/bbmips  
+https://github.com/alexskp/MIPS-Core  
+https://github.com/phrolow/Compiler  
+
+
+

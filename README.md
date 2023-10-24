@@ -66,6 +66,7 @@
 [RISC](https://ru.wikipedia.org/wiki/RISC)  
 [CISC](https://ru.wikipedia.org/wiki/CISC)  
 [архитекура MIPS](https://ru.wikipedia.org/wiki/MIPS_(%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0))
+[Харис и Харис](https://is.ifmo.ru/books/2016/digital-design-and-computer-architecture-russian-translation_July16_2016.pdf)
 
 ### Чужие проекты:  
 https://github.com/i1i1/bbmips  

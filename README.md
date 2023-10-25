@@ -76,5 +76,10 @@ https://github.com/i1i1/bbmips
 https://github.com/alexskp/MIPS-Core  
 https://github.com/phrolow/Compiler  
 
+## Устройство процессора
+![image](https://github.com/urtoach/lab3oop/assets/115491314/1711bb1b-8b98-4126-bbfb-7e73beedd10d)
+![image](https://github.com/urtoach/lab3oop/assets/115491314/eb59bb8a-ba62-449c-bf03-9f0b1324a800)
+
+
 
 

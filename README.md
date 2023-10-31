@@ -75,6 +75,7 @@
 https://github.com/i1i1/bbmips  
 https://github.com/alexskp/MIPS-Core  
 https://github.com/phrolow/Compiler  
+**https://github.com/averrin/vvm**
 
 ## Устройство процессора
 ![image](https://github.com/urtoach/lab3oop/assets/115491314/1711bb1b-8b98-4126-bbfb-7e73beedd10d)

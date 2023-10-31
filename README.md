@@ -70,11 +70,14 @@
 [CISC](https://ru.wikipedia.org/wiki/CISC)  
 [архитекура MIPS](https://ru.wikipedia.org/wiki/MIPS_(%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0))
 [Харис и Харис](https://is.ifmo.ru/books/2016/digital-design-and-computer-architecture-russian-translation_July16_2016.pdf)
+[Пишем собственную виртуальную машину](https://habr.com/ru/articles/434138/#4)
 
 ### Чужие проекты:  
 https://github.com/i1i1/bbmips  
 https://github.com/alexskp/MIPS-Core  
 https://github.com/phrolow/Compiler  
+
+**[Статейка и гитхаб к ней](https://averrin.medium.com/toy-vm-c72e9d962451)**  
 **https://github.com/averrin/vvm**
 
 ## Устройство процессора
@@ -102,5 +105,6 @@ Program.h: Этот файл содержит класс Program, который
 
 Processor.h:Описывает процессор, включая устройство управления, блок регистров, память программ и память данных.
 
+### Итоговая программа должна быть способна моделировать выполнение программы на низкоуровневом языке (ассемблере) на виртуальном процессоре. Должны быть возможность загрузить программу в память процессора, выполнить ее и наблюдать за изменением состояния процессора (таким как значения регистров) по мере выполнения программы.
 
 

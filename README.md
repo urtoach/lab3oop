@@ -103,4 +103,8 @@ https://github.com/Vladislave0-0/Processor
 
 ![image](https://github.com/urtoach/lab3oop/assets/115491314/16909c4b-43d8-4527-9ca8-08994cd2ffa1)
 
+#### Память (DataMemory)
+![image](https://github.com/urtoach/lab3oop/assets/115491314/267264e9-951e-46ce-a83b-b6056e905889)
+
+
 

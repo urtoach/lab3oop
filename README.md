@@ -70,7 +70,8 @@
 [CISC](https://ru.wikipedia.org/wiki/CISC)  
 [архитекура MIPS](https://ru.wikipedia.org/wiki/MIPS_(%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0))
 [Харис и Харис](https://is.ifmo.ru/books/2016/digital-design-and-computer-architecture-russian-translation_July16_2016.pdf)
-[Пишем собственную виртуальную машину](https://habr.com/ru/articles/434138/#4)
+[Пишем собственную виртуальную машину](https://habr.com/ru/articles/434138/#4)  
+[Руководство по симулятору простого ассемблера для 8-битного процессора на Javascript](https://habr.com/ru/companies/otus/articles/680920/)
 
 ### Чужие проекты:  
 https://github.com/i1i1/bbmips  

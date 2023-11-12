@@ -1,17 +1,25 @@
-#ifndef PROGRAM_H
 #define PROGRAM_H
+#ifndef PROGRAM_H
 
-#include <vector>
-#include "Command.h"
+#include <Command.h>
 
 class Program {
-private:
-    std::vector<Command> program;
+private: 
+    std::list<CommandDescription> commands;
 public:
-    void addCommand(const Command& command);
-    void editCommand(int index, const Command& command);
-    Command getCommand(int index);
-    void showProgram();
+    void addCommand(CommandDescription &command);
+    void removeCommand(CommandDescription &command);
 };
 
-#endif // PROGRAM_H
+class ProgramMemory {
+private:
+    Program program;
+    size_t size;
+public: 
+    void editProgram();
+    void showProgram();
+    CommandDescripion getCurrentCommand();
+    void + setProgramCounter(int address);
+};
+
+#endif //PROGRAM_H

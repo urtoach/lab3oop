@@ -21,4 +21,8 @@ private:
 public:
 }
 
+class ProgramMmory : public Memory {}
+
+class DataMemory : public Memory {}
+
 #endif //MEMORY_H

@@ -27,7 +27,7 @@ public:
 
 class MemoryOperand: public OperandDescriptor {
 private:
-    uint64_t* adress;
+    size_t adress;
 public:
     uint64_t getValue() const override;
 }

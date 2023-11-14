@@ -8,7 +8,7 @@
 class Label {
 private:
     std::string id;
-    uint64_t* adress;
+    size_t adress;
 public:
     const std::string getId();
     uint64_t getAdres();

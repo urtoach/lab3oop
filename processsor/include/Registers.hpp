@@ -26,7 +26,8 @@ enum class GPRegister {
 
 enum class ConditionFlags {
     ZF, // zero
-    CF, // sign
+    CF, // carry
+    SF, // sign
     OF // overflow
 };
 

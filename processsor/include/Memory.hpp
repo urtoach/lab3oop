@@ -18,10 +18,19 @@ class Memory {
 private: 
     std::vector<DataUnit>;
 public:
-}
+    void read(size_t adress);
+    void write(size_t adress, uint64_t value);
+};
 
-class ProgramMmory : public Memory {}
+class ProgramMmory : public Memory {
+public:
+    void showProgram();
+    void editProgram();
+};
 
-class DataMemory : public Memory {}
+class DataMemory : public Memory {
+    void dump();
+    
+};
 
 #endif //MEMORY_H

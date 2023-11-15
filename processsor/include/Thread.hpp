@@ -9,6 +9,9 @@ private:
     std::string id;
     Register programCounter;
 public:
+    void execute();
+    Register getPC() const;
+    void setPC(const Register &pc);
 };
 
 #endif //THREAD_H

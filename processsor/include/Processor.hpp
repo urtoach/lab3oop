@@ -11,11 +11,17 @@ private:
     ConditionFlags flag;
     RegisterBlock registers;
     std::vector<Thread>;
-    Memory memory;
+    ProgramMemory program;
+    DataMemory data;
 
 public:
 // getters
+    
 // setters
+    void loadProgram(std::ofstream &file);
+    void createThread();
+    void editProcessor();
+    void execute();
 };
 
 

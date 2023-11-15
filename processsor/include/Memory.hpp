@@ -11,7 +11,6 @@
 class DataUnit {
 private:
     uint64_t value;
-    bool lock;
 public:
 };
 

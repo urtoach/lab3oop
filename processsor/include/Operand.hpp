@@ -12,6 +12,8 @@ enum class OperandType{
 
 // parent class
 class OperandDescriptor {
+private:
+    unsigned char code;
 public:
     OperandType getType();
     uint64_t getValue() const = 0;

@@ -18,7 +18,7 @@ public:
 class CommandDescriptor {
 private:
     Label label;
-    uint64_t code;
+    unsigned char code;
 public:
     virtual void execute() = 0;
 };
@@ -65,8 +65,8 @@ class HLT : public UnaryCommand {};
 class JE : public UnaryCommand {};
 class JNE : public UnaryCommand {};
 
-// binary commands
-class ADD : public BinaryCommand {};
+  // binary commands
+  class ADD : public BinaryCommand {};
 class SUB : public BinaryCommand {};
 class AND : public BinaryCommand {};
 class OR : public BinaryCommand {};

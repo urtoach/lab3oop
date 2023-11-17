@@ -1,7 +1,7 @@
 #define OPERAND_H
 #ifndef OPERAND_H
 
-#include <Registers.hpp>
+#include <registers.hpp>
 
 // 
 enum class OperandType{

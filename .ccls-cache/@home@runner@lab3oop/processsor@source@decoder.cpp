@@ -1,4 +1,4 @@
-#include "../include/Decoder.hpp"
+#include "../include/decoder.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>

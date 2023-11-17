@@ -2,7 +2,7 @@
 #ifndef COMMAND_H
 
 #include <string>
-#include <Operand.hpp>
+#include <operand.hpp>
 
 //
 class Label {
@@ -18,6 +18,7 @@ public:
 class CommandDescriptor {
 private:
     Label label;
+    Label target_label;
     unsigned char code;
 public:
     virtual void execute() = 0;
@@ -84,5 +85,17 @@ class JMP : public JumpCommand {};
 class DB : public DataDeclarationCommand {};
 class DW : public DataDeclarationCommand {};
 class DD : public DataDeclarationCommand {};
+
+// class for create 
+class CommandFactory {
+public:
+    static std::unique_ptr<CommandDescriptor> createAdd() {
+      return std::make_unique<ADD>();
+    }
+};
+
+// type for command instantiation func
+using OperationCreator = std::function<std::unique_ptr<Operation>()>;
+
 
 #endif //COMMAND_H

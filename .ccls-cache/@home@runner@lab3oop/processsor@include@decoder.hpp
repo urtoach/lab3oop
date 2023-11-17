@@ -6,9 +6,10 @@
 #include <vector>
 #include <string>
 
-void lexer();
-void parser();
-void interpritator();
-void decoder();
+class CodeTable {
+private:
+    std::unordered_map<unsigned char, CommandCreator> opcode_to_comm
+public:
+};
 
 #endif //DECODER_H

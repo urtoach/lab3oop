@@ -2,7 +2,7 @@
 #ifndef THREAD_H
 
 #include <string>
-#include <Registers.hpp>
+#include <registers.hpp>
 
 class Thread {
 private:

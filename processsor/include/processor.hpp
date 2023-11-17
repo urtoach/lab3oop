@@ -2,9 +2,9 @@
 #ifndef PROCESSOR_H
 
 #include <vector>
-#include <Registers.hpp>
-#include <Threads.hpp>
-#include <Memory.hpp>
+#include <registers.hpp>
+#include <threads.hpp>
+#include <memory.hpp>
 
 class Processor {
 private:

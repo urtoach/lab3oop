@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <command.hpp>
 
 class CodeTable {
 private:

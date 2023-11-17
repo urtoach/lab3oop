@@ -112,8 +112,7 @@ https://github.com/Vladislave0-0/Processor
 - **Memory *(ссылка на память)*:** определяет адрес ячейки (эффективный адрес)
 
 ### Примерная UML-диаграмма необходимых классов
-![image](https://github.com/urtoach/lab3oop/assets/115491314/8fe5e6c0-6590-4b14-be08-e55524cc6e9a)
-
+![image](https://github.com/urtoach/lab3oop/assets/115491314/f8da2034-845d-493c-9668-a3a3043529ad)
 
 
 ![image](https://github.com/urtoach/lab3oop/assets/115491314/4872c4e6-e494-4886-88b8-87c635be636c)

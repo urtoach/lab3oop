@@ -40,9 +40,9 @@ enum class StatCode {
 
 class Register {
 private:
-    GPRegister name;
-    uint64_t value;
-    bool lock;
+    GPRegister name_;
+    uint64_t value_;
+    bool lock_;
 public:
     GPRegister getName() const;
     bool isLocked() const;
@@ -52,7 +52,7 @@ public:
 
 class RegisterBlock {
 private:
-    std::array<Register, NUMBER_OF_GPR>
+    std::array<Register, NUMBER_OF_GPR> registers_;
 public:
     Register& getRegister(GPRegister name);
     void lockRegister(GPRegister name);

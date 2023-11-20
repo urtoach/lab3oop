@@ -10,10 +10,20 @@ enum class OperandType{
     IMMEDIATE_OPERAND
 };
 
+//
+class Label {
+private:
+    std::string id_;
+    size_t adress_;
+public:
+    const std::string getId();
+    uint64_t getAdres();
+};
+
 // parent class
 class OperandDescriptor {
 private:
-    unsigned char code;
+    unsigned char code_;
 public:
     OperandType getType();
     uint64_t getValue() const = 0;
@@ -22,21 +32,21 @@ public:
 // child classes
 class RegisterOperand: public OperandDescriptor {
 private:
-    GPRegister register;
+    GPRegister register_;
 public:
     uint64_t getValue() const override;
 }
 
 class MemoryOperand: public OperandDescriptor {
 private:
-    size_t adress;
+    size_t adress_;
 public:
     uint64_t getValue() const override;
 }
 
 class ImmediateOperand: public OperandDescriptor {
 private:
-    uint64_t value;
+    uint64_t value_;
 public:
     uint64_t getValue() const override;
 }

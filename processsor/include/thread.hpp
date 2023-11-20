@@ -6,8 +6,8 @@
 
 class Thread {
 private:
-    std::string id;
-    Register programCounter;
+    std::string id_;
+    Register program_counter_;
 public:
     void execute();
     Register getPC() const;

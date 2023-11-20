@@ -10,13 +10,13 @@
 
 class DataUnit {
 private:
-    uint64_t value;
+    uint64_t value_;
 public:
 };
 
 class Memory {
 private: 
-    std::vector<DataUnit>;
+    std::vector<DataUnit> data_;
 public:
     void read(size_t adress);
     void write(size_t adress, uint64_t value);

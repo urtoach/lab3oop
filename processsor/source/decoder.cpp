@@ -1,15 +1,20 @@
-#include "../include/decoder.hpp"
+#include <../include/decoder.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
 
-void decoder(const std::string filename){
-    std::ifstream file(filename);
-    if (!file.is_open()) {
-        std::cerr << "unable to open file: " << filename << std::endl;
-        throw std::runtime_error("unable to open file");
-    }
-    std::string line;
-    while (std::getline(file, line)) {}
-    file.close();
+// CodeTable methods
+CodeTable::CodeTable() {
+    opcode_to_table_[1] = []() { return std::make_unique<AddFunc>(); };
+    // 
 }
+
+std::unique_ptr<CommandDescriptor> CodeTable::commandCreate(unsigned char opcode){
+    auto it = opcode_to_table_.find(opcode);
+    if (it == opcode_to_table_.end()) {
+        return it->second();
+    }
+    throw std::runtime_error("invalid opcode");
+}
+

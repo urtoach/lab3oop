@@ -8,11 +8,11 @@
 
 class Processor {
 private:
-    ConditionFlags flag;
-    RegisterBlock registers;
-    std::vector<Thread>;
-    ProgramMemory program;
-    DataMemory data;
+    ConditionFlags flag_;
+    RegisterBlock registers_;
+    std::vector<Thread> threads_;
+    ProgramMemory program_;
+    DataMemory data_;
 
 public:
 // getters

@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <command.hpp>
+#include <memory.hpp>
 
 using OperationCreator = std::function<std::unique_ptr<CommandDescriptor>()>;
 
@@ -23,5 +24,12 @@ public:
 
 //example
 //std::unique_ptr<CommandDescriptor> command = op_table.commandCreate(0x01);
+
+class Decoder {
+private:
+    ProgramMemory program_;
+    CodeTable table_
+public:
+};
 
 #endif //DECODER_H

@@ -1,5 +1,5 @@
-#define INTERPRETER_H
 #ifndef INTERPRETER_H
+#define INTERPRETER_H
 
 void lexer();
 void parser();

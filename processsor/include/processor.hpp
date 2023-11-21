@@ -1,10 +1,11 @@
-#define PROCESSOR_H
 #ifndef PROCESSOR_H
+#define PROCESSOR_H
 
 #include <vector>
-#include <registers.hpp>
-#include <threads.hpp>
-#include <memory.hpp>
+
+#include "registers.hpp"
+#include "thread.hpp"
+#include "memory.hpp"
 
 class Processor {
 private:

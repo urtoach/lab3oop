@@ -1,5 +1,5 @@
-#define THREAD_H
 #ifndef THREAD_H
+#define THREAD_H
 
 #include <string>
 #include <registers.hpp>

@@ -1,5 +1,6 @@
-#define OPERAND_H
 #ifndef OPERAND_H
+#define OPERAND_H
+
 
 #include <registers.hpp>
 
@@ -26,7 +27,7 @@ private:
     unsigned char code_;
 public:
     OperandType getType();
-    uint64_t getValue() const = 0;
+    virtual uint64_t getValue() const = 0;
 };
 
 // child classes
@@ -35,20 +36,20 @@ private:
     GPRegister register_;
 public:
     uint64_t getValue() const override;
-}
+};
 
 class MemoryOperand: public OperandDescriptor {
 private:
     size_t adress_;
 public:
     uint64_t getValue() const override;
-}
+};
 
 class ImmediateOperand: public OperandDescriptor {
 private:
     uint64_t value_;
 public:
     uint64_t getValue() const override;
-}
+};
 
 #endif //OPERAND_H

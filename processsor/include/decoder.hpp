@@ -1,14 +1,17 @@
-#define DECODER_H
 #ifndef DECODER_H
+#define DECODER_H
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
-#include <command.hpp>
-#include <memory.hpp>
+#include <functional>
 
-using OperationCreator = std::function<std::unique_ptr<CommandDescriptor>()>;
+#include "command.hpp"
+#include "memory.hpp"
+
+
+using CommandCreator = std::function<std::unique_ptr<CommandDescriptor>()>;
 
 class CodeTable {
 private:
@@ -28,7 +31,7 @@ public:
 class Decoder {
 private:
     ProgramMemory program_;
-    CodeTable table_
+    CodeTable table_;
 public:
 };
 

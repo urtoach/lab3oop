@@ -1,5 +1,5 @@
-#define MEMORY_H
 #ifndef MEMORY_H
+#define MEMORY_H
 
 #include <atomic>
 #include <vector> 
@@ -22,7 +22,7 @@ public:
     void write(size_t adress, uint64_t value);
 };
 
-class ProgramMmory : public Memory {
+class ProgramMemory : public Memory {
 public:
     void showProgram();
     void editProgram();

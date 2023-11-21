@@ -1,5 +1,5 @@
-#define REGISTER_H
 #ifndef REGISTER_H
+#define REGISTER_H
 
 // number of general purpose registers
 constexpr int NUMBER_OF_GPR = 16;

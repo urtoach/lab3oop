@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream> 
 #include <string>
 #include "../include/interpreter.hpp"
 #include "../include/processor.hpp"
@@ -51,6 +52,8 @@ unsigned char CommandTable::getOpcode(const std::string& opcode) const {
 
 // other methods
 
+
+
 void parser(const std::string filename){
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -58,14 +61,37 @@ void parser(const std::string filename){
         throw std::runtime_error("unable to open file");
     }
     std::string line;
-    Processor processor;
+    //Processor processor;
     
     while (std::getline(file, line)) {
         // if empty or comment
         if (line.empty() || line.front() == ';') {
             continue;
         }
-        if (line.back() == ':')
+        if (line.back() == ':'){
+            // label
+        }
+
+        std::istringstream iss(line);
+        std::string mnemonic;
+        iss >> mnemonic;
+
+        unsigned char opcode = CommandTable::getOpcode(mnemonic);
+        if (opcode != 0x00){
+            // opcode to memory
+        }
+        else {
+            throw std::runtime_error("");
+        }
+
+        std::string operand;
+        while (iss >> operand) {
+            if (operand.front() == '$'){
+                // immediate
+            }
+            
+        }        
+
     }
     file.close();
 }

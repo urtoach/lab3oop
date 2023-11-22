@@ -14,53 +14,69 @@ private:
     Label label_;
 public:
     // constructor
+    CommandDescriptor();
     // destructor
     virtual ~CommandDescriptor() = default;
+    
     // getters
     Label getLabel() const;
+    
     // setters
     void setLabel(const Label& label); 
+    
     // other methods
     virtual void execute() = 0;
 };
 
 // mommies for commands
 class UnaryCommand : public CommandDescriptor {
-private:
+protected:
     std::shared_ptr<OperandDescriptor> operand_;
 public:
     // constructor
+    UnaryCommand(const std::shared_ptr<OperandDescriptor>& operand) : operand_(operand) {};
+    
     // destructor
     virtual ~UnaryCommand() = default;
+    
     // getters
     std::shared_ptr<OperandDescriptor> getOperand() const;
+    
     // setters
-    void setOperand(const std::shared_ptr<OperandDescriptor> operand);
+    void setOperand(const std::shared_ptr<OperandDescriptor>& operand);
 };
 
 class BinaryCommand : public CommandDescriptor {
-private:
+protected:
     std::array<std::shared_ptr<OperandDescriptor>, 2> operands_;
 public:
     // constructor
+    BinaryCommand(const std::shared_ptr<OperandDescriptor>& operand1,
+                  const std::shared_ptr<OperandDescriptor>& operand2);
+    
     // destructor
     virtual ~BinaryCommand() = default;
+    
     // getters
-    std::shared_ptr<OperandDescriptor>& getOperands() const;
+    std::array<std::shared_ptr<OperandDescriptor>,2> getOperands() const;
+    
     // setters
-    void setOperands(const std::shared_ptr<OperandDescriptor> operand1,
-         const std::shared_ptr<OperandDescriptor> operand2);
+    void setOperands(const std::shared_ptr<OperandDescriptor>& operand1,
+         const std::shared_ptr<OperandDescriptor>& operand2);
 };
 
 class JumpCommand : public CommandDescriptor {
 private:
-    Label jumpLabel_;
+    Label jump_label_;
 public:
     // constructor
+    JumpCommand(const Label& jump_label) : jump_label_(jump_label) {};
     // destructor
     virtual ~JumpCommand() = default;
+    
     // getters
     Label getJumpLabel() const;
+    
     // setters
     void setJumpLabel(const Label& jump_label);
 };
@@ -69,21 +85,27 @@ class DataDeclarationCommand : public CommandDescriptor {
 private: 
 public:
     // constructor
+    
     // destructor
     virtual ~DataDeclarationCommand() = default;
+    
     // getters
+    
     // setters
 };
 
 class ThreadInitializationCommand : public CommandDescriptor {
 private: 
-    Label targetLabel_;
+    Label target_label_;
 public:
     // constructor
+    
     // destructor
     virtual ~ThreadInitializationCommand() = default;
+    
     // getters
     Label getTargetLabel() const;
+    
     // setters
     void setTargetLabel(const Label& target_label);
 };

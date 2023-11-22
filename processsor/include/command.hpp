@@ -2,6 +2,8 @@
 #define COMMAND_H
 
 #include <string>
+#include <array>
+
 #include <operand.hpp>
 #include <memory>
 
@@ -10,86 +12,200 @@ class CommandDescriptor {
 private:
     Label label_;
 public:
+    // getters
+    Label getLabel() const;
+    // setters
+    void setLabel(const Label& label); 
+    // other methods
     virtual ~CommandDescriptor() = default;
     virtual void execute() = 0;
-
-    Label get
 };
 
 // mommies for commands
 class UnaryCommand : public CommandDescriptor {
 private:
     std::shared_ptr<OperandDescriptor> operand_;
+public:
+    // getters
+    std::shared_ptr<OperandDescriptor> getOperand() const;
+    // setters
+    void setOperand(const std::shared_ptr<OperandDescriptor> operand);
 };
 
 class BinaryCommand : public CommandDescriptor {
 private:
-    std::shared_ptr<OperandDescriptor> operand1_;
-    std::shared_ptr<OperandDescriptor> operand2_;
+    std::array<std::shared_ptr<OperandDescriptor>, 2> operands_;
+public:
+    // getters
+    std::shared_ptr<OperandDescriptor>& getOperands() const;
+    // setters
+    void setOperands(const std::shared_ptr<OperandDescriptor> operand1,
+         const std::shared_ptr<OperandDescriptor> operand2);
 };
 
 class JumpCommand : public CommandDescriptor {
 private:
     Label jumpLabel_;
+public:
+    // getters
+    Label getJumpLabel() const;
+    // setters
+    void setJumpLabel(const Label& jump_label);
 };
 
 class DataDeclarationCommand : public CommandDescriptor {
 private: 
+public:
+    // getters
+    // setters
 };
 
 class ThreadInitializationCommand : public CommandDescriptor {
 private: 
     Label targetLabel_;
+public:
+    // getters
+    Label getTargetLabel() const;
+    // setters
+    void setTargetLabel(const Label& target_label);
 };
 
 class ThreadTermination : public CommandDescriptor {
 private:
+public:
+    // getters
+    // setters
 };
 
 // commands
 // unary commands
-class INCFunc : public UnaryCommand {};
-class DECFunc : public UnaryCommand {};
-class NOTFunc : public UnaryCommand {};
-class SHLFunc : public UnaryCommand {};
-class SHRFunc : public UnaryCommand {};
-class RETFunc : public UnaryCommand {};
-class HLTFunc : public UnaryCommand {};
-class CALLFunc : public UnaryCommand {};
+class INCFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class DECFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class NOTFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class SHLFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class SHRFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class RETFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class HLTFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
+
+class CALLFunc : public UnaryCommand {
+public:
+    void execute() override;
+};
 
 // binary commands
-class ADDFunc : public BinaryCommand {};
-class SUBFunc : public BinaryCommand {};
-class ANDFunc : public BinaryCommand {};
-class ORFunc : public BinaryCommand {};
-class XORFunc : public BinaryCommand {};
-class MOVFunc : public BinaryCommand {};
-class CMPFunc : public BinaryCommand {};
+class ADDFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class SUBFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class ANDFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class ORFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class XORFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class MOVFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class CMPFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
 
 // jump commands 
-class JMPFunc : public JumpCommand {};
-class JEFunc : public JumpCommand {};
-class JNEFunc : public JumpCommand {};
-class JGFunc : public JumpCommand {};
-class JGEFunc : public JumpCommand {};
-class JLFunc : public JumpCommand {};
-class JLEFunc : public JumpCommand {};
+class JMPFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JEFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JNEFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JGFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JGEFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JLFunc : public JumpCommand {
+public:
+    void execute() override;
+};
+
+class JLEFunc : public JumpCommand {
+public:
+    void execute() override;
+};
 
 // data declaration commands
-class DBFunc : public DataDeclarationCommand {};
-class DWFunc : public DataDeclarationCommand {};
-class DDFunc : public DataDeclarationCommand {};
-
-// class for create 
-/*class CommandFactory {
+class DBFunc : public DataDeclarationCommand {
 public:
-    static std::unique_ptr<CommandDescriptor> createAdd() {
-      return std::make_unique<ADD>();
-    }
-}; */
+    void execute() override;
+};
 
-// type for command instantiation func
-//using OperationCreator = std::function<std::unique_ptr<Operation>()>;
+class DWFunc : public DataDeclarationCommand {
+public:
+    void execute() override;
+};
+
+class DDFunc : public DataDeclarationCommand {
+public:
+    void execute() override;
+};
 
 
 #endif //COMMAND_H

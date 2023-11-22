@@ -1,4 +1,4 @@
-#ifndef REGISTER_H
+
 #define REGISTER_H
 
 // number of general purpose registers
@@ -44,9 +44,14 @@ private:
     uint64_t value_;
     bool lock_;
 public:
+    // getters
     GPRegister getName() const;
+    uint64_t getValue() const;
     bool isLocked() const;
-
+    // setters
+    void setName(const GPRegister name);
+    void setValue(const uint64_t value);
+    // other methods
     void locking();
 };
 
@@ -54,7 +59,11 @@ class RegisterBlock {
 private:
     std::array<Register, NUMBER_OF_GPR> registers_;
 public:
-    Register& getRegister(GPRegister name);
+    // getters
+    std::array<Register, NUMBER_OF_GPR>& getRegisters(GPRegister name) const;
+    // setters
+    void setRegisters(const std::array<Register, NUMBER_OF_GPR>& registers);
+    // other methods
     void lockRegister(GPRegister name);
     void lockAll();
 };

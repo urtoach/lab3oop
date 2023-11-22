@@ -12,12 +12,21 @@ class DataUnit {
 private:
     uint64_t value_;
 public:
+    // getters
+    uint64_t getValue() const;
+    // setters
+    void setValue(const uint16_t value);
 };
 
 class Memory {
 private: 
     std::vector<DataUnit> data_;
 public:
+    // getters
+    std::vector<DataUnit>& getData() const;
+    // setters
+    void setData(const std::vector<DataUnit>& data);
+    // other methods
     void read(size_t adress);
     void write(size_t adress, uint64_t value);
 };
@@ -30,7 +39,6 @@ public:
 
 class DataMemory : public Memory {
     void dump();
-    
 };
 
 #endif //MEMORY_H

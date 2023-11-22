@@ -44,13 +44,23 @@ private:
     uint64_t value_;
     bool lock_;
 public:
+    // constructors
+    Register(GPRegister name);
+    Register(GPRegister name, uint64_t value);
+    Register(GPRegister name, uint64_t value, bool lock);
+
+    // destructors
+    ~Register();
+
     // getters
     GPRegister getName() const;
     uint64_t getValue() const;
     bool isLocked() const;
+
     // setters
     void setName(const GPRegister name);
     void setValue(const uint64_t value);
+
     // other methods
     void locking();
 };
@@ -59,10 +69,19 @@ class RegisterBlock {
 private:
     std::array<Register, NUMBER_OF_GPR> registers_;
 public:
+    // constructors
+    RegisterBlock();
+    RegisterBlock(std::array<uint64_t, NUMBER_OF_GPR>& values);
+
+    // destructors
+    ~RegisterBlock();
+
     // getters
     std::array<Register, NUMBER_OF_GPR>& getRegisters(GPRegister name) const;
+
     // setters
     void setRegisters(const std::array<Register, NUMBER_OF_GPR>& registers);
+
     // other methods
     void lockRegister(GPRegister name);
     void lockAll();

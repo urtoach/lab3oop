@@ -4,6 +4,7 @@
 #include <string>
 #include <array>
 
+
 #include <operand.hpp>
 #include <memory>
 
@@ -12,12 +13,14 @@ class CommandDescriptor {
 private:
     Label label_;
 public:
+    // constructor
+    // destructor
+    virtual ~CommandDescriptor() = default;
     // getters
     Label getLabel() const;
     // setters
     void setLabel(const Label& label); 
     // other methods
-    virtual ~CommandDescriptor() = default;
     virtual void execute() = 0;
 };
 
@@ -26,6 +29,9 @@ class UnaryCommand : public CommandDescriptor {
 private:
     std::shared_ptr<OperandDescriptor> operand_;
 public:
+    // constructor
+    // destructor
+    virtual ~UnaryCommand() = default;
     // getters
     std::shared_ptr<OperandDescriptor> getOperand() const;
     // setters
@@ -36,6 +42,9 @@ class BinaryCommand : public CommandDescriptor {
 private:
     std::array<std::shared_ptr<OperandDescriptor>, 2> operands_;
 public:
+    // constructor
+    // destructor
+    virtual ~BinaryCommand() = default;
     // getters
     std::shared_ptr<OperandDescriptor>& getOperands() const;
     // setters
@@ -47,6 +56,9 @@ class JumpCommand : public CommandDescriptor {
 private:
     Label jumpLabel_;
 public:
+    // constructor
+    // destructor
+    virtual ~JumpCommand() = default;
     // getters
     Label getJumpLabel() const;
     // setters
@@ -56,6 +68,9 @@ public:
 class DataDeclarationCommand : public CommandDescriptor {
 private: 
 public:
+    // constructor
+    // destructor
+    virtual ~DataDeclarationCommand() = default;
     // getters
     // setters
 };
@@ -64,15 +79,21 @@ class ThreadInitializationCommand : public CommandDescriptor {
 private: 
     Label targetLabel_;
 public:
+    // constructor
+    // destructor
+    virtual ~ThreadInitializationCommand() = default;
     // getters
     Label getTargetLabel() const;
     // setters
     void setTargetLabel(const Label& target_label);
 };
 
-class ThreadTermination : public CommandDescriptor {
+class ThreadTerminationCommand : public CommandDescriptor {
 private:
 public:
+    // constructor
+    // destructor
+    virtual ~ThreadTerminationCommand() = default;
     // getters
     // setters
 };

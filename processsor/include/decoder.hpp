@@ -17,12 +17,11 @@ class CodeTable {
 private:
     std::unordered_map<unsigned char, CommandCreator> opcode_to_command_;
 public:
-// constructor
+    // constructor
     CodeTable();
-// destructor
+    // destructor
+    // other methods
     std::unique_ptr<CommandDescriptor> commandCreate(unsigned char opcode);
-// getters
-// setters
 };
 
 //example
@@ -33,6 +32,7 @@ private:
     ProgramMemory program_;
     CodeTable table_;
 public:
+    void decoder();
 };
 
 #endif //DECODER_H

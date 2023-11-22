@@ -12,6 +12,9 @@ class DataUnit {
 private:
     uint64_t value_;
 public:
+    // constructor
+    DataUnit(uint64_t value);
+
     // getters
     uint64_t getValue() const;
     // setters
@@ -22,10 +25,18 @@ class Memory {
 private: 
     std::vector<DataUnit> data_;
 public:
+    // constructor
+    Memory(const std::vector<DataUnit>& data);
+
+    // destructor
+    virtual ~Memory() = default;
+    
     // getters
     std::vector<DataUnit>& getData() const;
+
     // setters
     void setData(const std::vector<DataUnit>& data);
+
     // other methods
     void read(size_t adress);
     void write(size_t adress, uint64_t value);

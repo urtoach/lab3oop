@@ -11,7 +11,7 @@
 
 class Processor {
 private:
-    std::shared_ptr<std::array<bool, 4>> flag_ = std::make_shared<std::array<bool, 4>>();;
+    std::shared_ptr<std::array<bool, 4>> flags_ = std::make_shared<std::array<bool, 4>>();;
     RegisterBlock registers_;
     std::vector<Thread> threads_;
     ProgramMemory program_;
@@ -24,14 +24,14 @@ public:
     ~Processor();
 
     // getters
-    ConditionFlags getFlag() const;
-    RegisterBlock& getRegisters() const;
-    std::vector<Thread>& getThreads() const;
-    ProgramMemory& getProgram() const;
-    DataMemory& getData() const;
+    ConditionFlags getFlags();
+    RegisterBlock getRegisters();
+    std::vector<Thread> getThreads() const;
+    ProgramMemory getProgram();
+    DataMemory getData();
 
     // setters
-    void setFlag(const ConditionFlags flag);
+    void setFlags(const std::array<bool, 4> flags);
     void setRegisters(const RegisterBlock& registers);
     void setThreads(const std::vector<Thread>& threads);
     void setProgram(const ProgramMemory& program);

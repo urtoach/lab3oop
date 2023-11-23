@@ -45,9 +45,9 @@ private:
     bool lock_;
 public:
     // constructors
-    Register(GPRegister name);
-    Register(GPRegister name, uint64_t value);
-    Register(GPRegister name, uint64_t value, bool lock);
+    Register(GPRegister name) : name_(name) {};
+    Register(GPRegister name, uint64_t value) : name_(name), value_(value) {};
+    Register(GPRegister name, uint64_t value, bool lock) : name_(name), value_(value), lock_(lock) {};
 
     // destructors
     ~Register();
@@ -77,7 +77,7 @@ public:
     ~RegisterBlock();
 
     // getters
-    std::array<Register, NUMBER_OF_GPR>& getRegisters(GPRegister name) const;
+    std::array<Register, NUMBER_OF_GPR> getRegisters(GPRegister name) const;
 
     // setters
     void setRegisters(const std::array<Register, NUMBER_OF_GPR>& registers);

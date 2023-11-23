@@ -12,6 +12,9 @@
 class CommandDescriptor {
 private:
     Label label_;
+    StatCode stat_;
+protected:
+    std::shared_ptr<std::array<bool, 4>> flags_;
 public:
     // constructor
     CommandDescriptor();
@@ -20,9 +23,11 @@ public:
     
     // getters
     Label getLabel() const;
+    StatCode getStat() const;
     
     // setters
     void setLabel(const Label& label); 
+    void setStat(StatCode stat);
     
     // other methods
     virtual void execute() = 0;
@@ -137,27 +142,7 @@ public:
     void execute() override;
 };
 
-class SHLFunc : public UnaryCommand {
-public:
-    void execute() override;
-};
-
-class SHRFunc : public UnaryCommand {
-public:
-    void execute() override;
-};
-
-class RETFunc : public UnaryCommand {
-public:
-    void execute() override;
-};
-
 class HLTFunc : public UnaryCommand {
-public:
-    void execute() override;
-};
-
-class CALLFunc : public UnaryCommand {
 public:
     void execute() override;
 };
@@ -194,6 +179,16 @@ public:
 };
 
 class CMPFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class SHLFunc : public BinaryCommand {
+public:
+    void execute() override;
+};
+
+class SHRFunc : public BinaryCommand {
 public:
     void execute() override;
 };

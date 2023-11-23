@@ -36,8 +36,8 @@ CodeTable::CodeTable() {
     opcode_to_command_[0x16] = []() { return std::make_unique<DDFunc>(); };
     // misc
     opcode_to_command_[0x17] = []() { return std::make_unique<HLTFunc>(); };
-    opcode_to_command_[0x18] = []() { return std::make_unique<RETFunc>(); };
-    opcode_to_command_[0x19] = []() { return std::make_unique<CALLFunc>(); };
+    //opcode_to_command_[0x18] = []() { return std::make_unique<RETFunc>(); };
+    //opcode_to_command_[0x19] = []() { return std::make_unique<CALLFunc>(); };
 }
 
 std::unique_ptr<CommandDescriptor> CodeTable::commandCreate(unsigned char opcode){

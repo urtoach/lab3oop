@@ -37,8 +37,8 @@ CommandTable::CommandTable(){
     mnemomic_to_opcode_["dd"] = 0x16;
 
     mnemomic_to_opcode_["hlt"] = 0x17;
-    mnemomic_to_opcode_["ret"] = 0x18;
-    mnemomic_to_opcode_["call"] = 0x19;
+    //mnemomic_to_opcode_["ret"] = 0x18;
+    //mnemomic_to_opcode_["call"] = 0x19;
 }
 
 unsigned char CommandTable::getOpcode(const std::string& opcode) const {

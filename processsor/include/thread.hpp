@@ -17,7 +17,7 @@ public:
     ~Thread();
     
     // getters
-    std::string& getId() const;
+    std::string getId() const;
     Register getPC() const;
 
     // setters

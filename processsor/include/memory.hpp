@@ -32,13 +32,13 @@ public:
     virtual ~Memory() = default;
     
     // getters
-    std::vector<DataUnit>& getData() const;
+    std::vector<DataUnit> getData() const;
 
     // setters
     void setData(const std::vector<DataUnit>& data);
 
     // other methods
-    void read(size_t adress);
+    DataUnit read(size_t adress);
     void write(size_t adress, uint64_t value);
 };
 

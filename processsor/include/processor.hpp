@@ -2,6 +2,8 @@
 #define PROCESSOR_H
 
 #include <vector>
+#include <array>
+#include <memory>
 
 #include "registers.hpp"
 #include "thread.hpp"
@@ -9,7 +11,7 @@
 
 class Processor {
 private:
-    ConditionFlags flag_;
+    std::shared_ptr<std::array<bool, 4>> flag_ = std::make_shared<std::array<bool, 4>>();;
     RegisterBlock registers_;
     std::vector<Thread> threads_;
     ProgramMemory program_;

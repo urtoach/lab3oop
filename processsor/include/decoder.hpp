@@ -29,9 +29,19 @@ public:
 
 class Decoder {
 private:
-    ProgramMemory program_;
+    std::shared_ptr<Register> program_counter_;
+    std::shared_ptr<ProgramMemory> program_;
     CodeTable table_;
 public:
+    // constructor
+    Decoder(const Register pc);
+    Decoder(const Register pc, ProgramMemory& program);
+
+    // getter
+    Register getPC() const;
+    // setter
+    void setPC(const Register pc);
+    // other methods
     void decoder();
 };
 

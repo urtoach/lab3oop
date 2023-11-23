@@ -11,6 +11,7 @@
 
 class Processor {
 private:
+    StatCode stat_;
     std::shared_ptr<std::array<bool, 4>> flags_ = std::make_shared<std::array<bool, 4>>();;
     RegisterBlock registers_;
     std::vector<Thread> threads_;

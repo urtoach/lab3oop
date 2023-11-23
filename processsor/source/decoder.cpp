@@ -48,3 +48,20 @@ std::unique_ptr<CommandDescriptor> CodeTable::commandCreate(unsigned char opcode
     throw std::runtime_error("invalid opcode");
 }
 
+// Decoder
+Decoder::Decoder(const Register pc) {
+    program_counter_ = std::make_shared<Register>(pc);
+}
+
+Decoder::Decoder(const Register pc, ProgramMemory& program) {
+    program_counter_ = std::make_shared<Register>(pc);
+    program_ = std::make_shared<ProgramMemory>(program);
+}
+
+Register Decoder::getPC() const {
+    return *program_counter_;
+}
+
+void Decoder::setPC(const Register pc) {
+    program_counter_ = std::make_shared<Register>(pc);
+}

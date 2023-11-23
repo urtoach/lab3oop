@@ -51,18 +51,8 @@ unsigned char CommandTable::getOpcode(const std::string& opcode) const {
 
 
 // other methods
-
-
-
-void parser(const std::string filename){
-    std::ifstream file(filename);
-    if (!file.is_open()) {
-        std::cerr << "unable to open file: " << filename << std::endl;
-        throw std::runtime_error("unable to open file");
-    }
+void parser(std::ifstream file){
     std::string line;
-    //Processor processor;
-    
     while (std::getline(file, line)) {
         // if empty or comment
         if (line.empty() || line.front() == ';') {
@@ -78,8 +68,9 @@ void parser(const std::string filename){
 
         unsigned char opcode = CommandTable::getOpcode(mnemonic);
         if (opcode != 0x00){
-            // opcode to memory
+            
         }
+        
         else {
             throw std::runtime_error("");
         }

@@ -24,7 +24,7 @@ public:
     void setId(const std::string& id);
     void setPC(const Register pc);
     
-    //other methods
+    // other methods
     void execute();
 };
 

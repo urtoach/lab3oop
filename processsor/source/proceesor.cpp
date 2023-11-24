@@ -5,6 +5,7 @@
 // Processor
 // constructor
 Processor::Processor() {
+    flags_ = std::make_shared<std::array<bool, NUMBER_OF_FLAGS>>();
     flags_->fill(false);
 }
 
@@ -13,7 +14,7 @@ Processor::Processor() {
 // destructor
 
 // getters
-std::shared_ptr<std::array<bool, 4>> Processor::getFlags() {
+std::shared_ptr<std::array<bool, NUMBER_OF_FLAGS>> Processor::getFlags() {
     return flags_;
 }
 
@@ -36,7 +37,7 @@ DataMemory Processor::getData() {
 //====================================================//
 
 // setters 
-void Processor::setFlags(const std::array<bool, 4> flags) {
+void Processor::setFlags(const std::array<bool, NUMBER_OF_FLAGS> flags) {
     for (size_t i = 0; i < flags.size(); i++){
         (*flags_)[i] = flags[i];
     }

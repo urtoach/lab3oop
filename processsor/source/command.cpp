@@ -220,13 +220,13 @@ void CMPFunc::execute() {
     catch(...){
         CommandDescriptor::setStat(StatCode::INS);
     }
-
+}
 //=======================================================//
 
 // SHL
 void SHLFunc::execute() {
     if (operands_[1]->getValue() <= 0) {
-        CommandDescriptor::setStat(StatCode::ADR);
+        CommandDescriptor::setStat(StatCode::INS);
     }
     else {
         operands_[0]->setValue(operands_[0]->getValue() << operands_[1]->getValue());
@@ -239,7 +239,7 @@ void SHLFunc::execute() {
 // SHR
 void SHRFunc::execute() {
     if (operands_[1]->getValue() <= 0) {
-        CommandDescriptor::setStat(StatCode::ADR);
+        CommandDescriptor::setStat(StatCode::INS);
     }
     else {
         operands_[0]->setValue(operands_[0]->getValue() >> operands_[1]->getValue());

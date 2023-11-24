@@ -18,7 +18,7 @@ public:
     // getters
     uint64_t getValue() const;
     // setters
-    void setValue(const uint16_t value);
+    void setValue(uint64_t value);
 };
 
 class Memory {

@@ -9,10 +9,12 @@
 #include "thread.hpp"
 #include "memory.hpp"
 
+constexpr int NUMBER_OF_FLAGS = 4;
+
 class Processor {
 private:
     StatCode stat_;
-    std::shared_ptr<std::array<bool, 4>> flags_ = std::make_shared<std::array<bool, 4>>();;
+    std::shared_ptr<std::array<bool, NUMBER_OF_FLAGS>> flags_; // = std::make_shared<std::array<bool, 4>>();;
     RegisterBlock registers_;
     std::vector<Thread> threads_;
     ProgramMemory program_;
@@ -25,14 +27,14 @@ public:
     ~Processor();
 
     // getters
-    ConditionFlags getFlags();
+    std::shared_ptr<std::array<bool, NUMBER_OF_FLAGS>> getFlags();
     RegisterBlock getRegisters();
     std::vector<Thread> getThreads() const;
     ProgramMemory getProgram();
     DataMemory getData();
 
     // setters
-    void setFlags(const std::array<bool, 4> flags);
+    void setFlags(const std::array<bool, NUMBER_OF_FLAGS> flags);
     void setRegisters(const RegisterBlock& registers);
     void setThreads(const std::vector<Thread>& threads);
     void setProgram(const ProgramMemory& program);

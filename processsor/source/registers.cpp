@@ -4,6 +4,11 @@
 
 
 // Register
+Register::Register() {
+    name_ = GPRegister::r15;
+    value_ = 0;
+    lock_ = true;
+}
 // getters
 GPRegister Register::getName() const {
     return name_;
@@ -35,11 +40,11 @@ void Register::locking() {
 
 // RegisterBlock
 // constructors
-RegisterBlock::RegisterBlock() {
-        for (size_t i = 0; i < NUMBER_OF_GPR; i++){
-            registers_[i] = Register(static_cast<GPRegister>(i));
-        }
+RegisterBlock::RegisterBlock() : registers_{} {
+    for (size_t i = 0; i < NUMBER_OF_GPR; i++){
+        registers_[i] = Register(static_cast<GPRegister>(i));
     }
+}
 
 RegisterBlock::RegisterBlock(std::array<uint64_t, NUMBER_OF_GPR>& values) {
     // Инициализация значений регистров

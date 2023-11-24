@@ -12,9 +12,10 @@ uint64_t DataUnit::getValue() const {
     return value_;
 }
 
-void DataUnit::setValue(const uint64_t value) {
+void DataUnit::setValue(uint64_t value) {
     value_ = value;
 }
+
 
 //=====================================================//
 

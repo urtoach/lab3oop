@@ -41,8 +41,8 @@ CommandTable::CommandTable(){
     //mnemomic_to_opcode_["call"] = 0x19;
 }
 
-unsigned char CommandTable::getOpcode(const std::string& opcode) const {
-    auto it = mnemomic_to_opcode_.find(opcode);
+unsigned char CommandTable::getOpcode(const std::string& mnemonic) const {
+    auto it = mnemomic_to_opcode_.find(mnemonic);
     if (it == mnemomic_to_opcode_.end()) {
         return it->second;
     }
@@ -51,7 +51,7 @@ unsigned char CommandTable::getOpcode(const std::string& opcode) const {
 
 
 // other methods
-void parser(std::ifstream file){
+void parser(std::ifstream& file){
     std::string line;
     while (std::getline(file, line)) {
         // if empty or comment
@@ -66,7 +66,8 @@ void parser(std::ifstream file){
         std::string mnemonic;
         iss >> mnemonic;
 
-        unsigned char opcode = CommandTable::getOpcode(mnemonic);
+        CommandTable code_table;
+        unsigned char opcode = code_table.getOpcode(mnemonic);
         if (opcode != 0x00){
             
         }

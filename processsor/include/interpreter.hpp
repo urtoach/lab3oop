@@ -8,7 +8,7 @@
 #include <functional>
 
 void lexer();
-void parser();
+void parser(std::ifstream& file);
 void interpritator();
 void decoder();
 

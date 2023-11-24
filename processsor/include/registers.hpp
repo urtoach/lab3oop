@@ -1,4 +1,4 @@
-
+#ifndef REGISTER
 #define REGISTER_H
 
 // number of general purpose registers
@@ -45,6 +45,7 @@ private:
     bool lock_;
 public:
     // constructors
+    Register();
     Register(GPRegister name) : name_(name) {};
     Register(GPRegister name, uint64_t value) : name_(name), value_(value) {};
     Register(GPRegister name, uint64_t value, bool lock) : name_(name), value_(value), lock_(lock) {};

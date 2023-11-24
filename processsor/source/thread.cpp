@@ -1,6 +1,6 @@
 #include "../include/thread.hpp"
 
-Thread::Thread(std::string& id) : id_(id), program_counter_(Register(GPRegister::rip)) {}
+Thread::Thread(std::string& id) : id_(id), program_counter_(Register(GPRegister::r15)) {}
 
 Thread::Thread(std::string& id, const Register& pc) : id_(id), program_counter_(pc) {}
 

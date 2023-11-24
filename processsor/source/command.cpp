@@ -64,9 +64,12 @@ void JumpCommand::setJumpLabel(const Label& jump_label) {
 // INC
 void INCFunc::execute() {
     if (UnaryCommand::getOperand()) {
-        ++(*(operand_));
+        operand_->setValue(operand_->getValue() + 1);
+        CommandDescriptor::setStat(StatCode::AOK);
     }
-    //throw std::invalid_argument("empty operand");
+    else {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
@@ -74,9 +77,17 @@ void INCFunc::execute() {
 // DEC
 void DECFunc::execute() {
     if (UnaryCommand::getOperand()) {
-        --(*(operand_));
+        try { 
+            operand_->setValue(operand_->getValue() - 1);
+            CommandDescriptor::setStat(StatCode::AOK);
+        }
+        catch(...) {
+            CommandDescriptor::setStat(StatCode::ADR);
+        }
     }
-    //throw std::invalid_argument("empty operand");
+    else {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
@@ -84,9 +95,17 @@ void DECFunc::execute() {
 // NOT
 void NOTFunc::execute() {
     if (UnaryCommand::getOperand()) {
-        operand_ = ~(*(operand_));
+        try {
+            operand_->setValue(~(operand_->getValue()));
+            CommandDescriptor::setStat(StatCode::AOK);
+        }
+        catch(...) {
+            CommandDescriptor::setStat(StatCode::ADR);
+        }
     }
-    //throw std::invalid_argument("empty operand");
+    else {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
@@ -101,48 +120,76 @@ void HLTFunc::execute() {
 
 // ADD
 void ADDFunc::execute() {
-    operands_[0] += operands_[1];
-    //throw std::invalid_argument("empty operand");
+    try {
+        operands_[0]->setValue(operands_[0]->getValue() + operands_[1]->getValue());
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
+    catch(...) {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
 
 // SUB
 void SUBFunc::execute() {
-    operands_[0] -= operands_[1];
-    //throw std::invalid_argument("empty operand");
+    try {
+        operands_[0]->setValue(operands_[0]->getValue() - operands_[1]->getValue());
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
+    catch(...) {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
 
 // AND
 void ANDFunc::execute() {
-    operands_[0] = operands_[0] & operands_[1];
-    if (operands_[0] == 0) { (*flags_)[(size_t)ConditionFlags::ZF] = true; }
-    else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
-    //throw std::invalid_argument("empty operand");
+    try {
+        operands_[0]->setValue(operands_[0]->getValue() & operands_[1]->getValue());
+        if (operands_[0] == 0) { (*flags_)[(size_t)ConditionFlags::ZF] = true; }
+        else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
+    catch(...) {
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
 
 // OR
 void ORFunc::execute() {
-    operands_[0] = operands_[0] | operands_[1];
-    if (operands_[0] == 0) { (*flags_)[(size_t)ConditionFlags::ZF] = true; }
-    else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
-    //throw std::invalid_argument("empty operand");
+    try {
+        operands_[0]->setValue(operands_[0]->getValue() | operands_[1]->getValue());
+        if (operands_[0] == 0) { (*flags_)[(size_t)ConditionFlags::ZF] = true; }
+        else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
+    catch(...){
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
 
 // XOR
 void XORFunc::execute() {
-    std::shared_ptr<OperandDescriptor> result;
-    *result = (~(*operands_[0]) & operands_[1]) | (~(operands_[1]) & operands_[0]); 
-    *operands_[0] = *result;
-    if (operands_[0] == 0) { (*flags_)[(size_t)ConditionFlags::ZF] = true; }
-    else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
-    //throw std::invalid_argument("empty operand");
+    try {
+        uint64_t op1 = operands_[0]->getValue();
+        uint64_t op2 = operands_[1]->getValue();
+
+        operands_[0]->setValue((~op1 & op2) | (~op1 & op2)); 
+        if (operands_[0]->getValue() == 0) { 
+            (*flags_)[(size_t)ConditionFlags::ZF] = true; 
+        }
+        else { (*flags_)[(size_t)ConditionFlags::ZF] = false; }
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
+    catch(...){
+        CommandDescriptor::setStat(StatCode::INS);
+    }
 }
 
 //=======================================================//
@@ -157,37 +204,47 @@ void MOVFunc::execute() {
 
 // CMP
 void CMPFunc::execute() {
-    if (operands_[0] == operands_[1]){
-        (*flags_)[(size_t)ConditionFlags::ZF] = true;
-        (*flags_)[(size_t)ConditionFlags::CF] = false;
-        (*flags_)[(size_t)ConditionFlags::OF] = false;
+    try {
+        if (operands_[0]->getValue() == operands_[1]->getValue()){
+            (*flags_)[(size_t)ConditionFlags::ZF] = true;
+            (*flags_)[(size_t)ConditionFlags::CF] = false;
+            (*flags_)[(size_t)ConditionFlags::OF] = false;
+        }
+        else {
+            (*flags_)[(size_t)ConditionFlags::ZF] = false;
+            (*flags_)[(size_t)ConditionFlags::ZF] = (operands_[0] < operands_[1]);
+            (*flags_)[(size_t)ConditionFlags::ZF] = false;
+        }
+        CommandDescriptor::setStat(StatCode::AOK);
     }
-    else {
-        (*flags_)[(size_t)ConditionFlags::ZF] = false;
-        (*flags_)[(size_t)ConditionFlags::ZF] = (operands_[0] < operands_[1]);
-        (*flags_)[(size_t)ConditionFlags::ZF] = false;
+    catch(...){
+        CommandDescriptor::setStat(StatCode::INS);
     }
-    //throw std::invalid_argument("empty operand");
-}
 
 //=======================================================//
 
 // SHL
 void SHLFunc::execute() {
-    if (operands_[1] <= 0) {
-        throw std::invalid_argument("empty operand");
+    if (operands_[1]->getValue() <= 0) {
+        CommandDescriptor::setStat(StatCode::ADR);
     }
-    operands_[0] = operands_[0] << operands_[1];
+    else {
+        operands_[0]->setValue(operands_[0]->getValue() << operands_[1]->getValue());
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
 }
 
 //=======================================================//
 
 // SHR
 void SHRFunc::execute() {
-    if (operands_[1] <= 0) {
-        throw std::invalid_argument("empty operand");
+    if (operands_[1]->getValue() <= 0) {
+        CommandDescriptor::setStat(StatCode::ADR);
     }
-    operands_[0] = operands_[0] >> operands_[1];
+    else {
+        operands_[0]->setValue(operands_[0]->getValue() >> operands_[1]->getValue());
+        CommandDescriptor::setStat(StatCode::AOK);
+    }
 }
 
 //=======================================================//

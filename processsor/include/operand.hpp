@@ -44,6 +44,9 @@ public:
     OperandType getType() const;
     unsigned int getCode() const;
 
+    virtual uint64_t getValue() const;
+    virtual void setValue(uint64_t value);
+
     // other methods
 };
 
@@ -57,9 +60,11 @@ public:
 
     // getter
     GPRegister getRegister() const;
+    uint64_t getValue() const override;
 
     // setter
     void setRegister(const GPRegister name);
+    void setValue(uint64_t value) override;
 };
 
 class MemoryOperand: public OperandDescriptor {
@@ -71,9 +76,11 @@ public:
 
     // getter
     size_t getAdress() const;
+    uint64_t getValue() const override;
 
     // setter
     void setAdress(const size_t adress);
+    void setValue(uint64_t value) override;
 };
 
 class ImmediateOperand: public OperandDescriptor {
@@ -84,10 +91,10 @@ public:
     ImmediateOperand(uint64_t value);
     
     // getter
-    uint64_t getValue() const;
+    uint64_t getValue() const override;
 
     // setter
-    void setValue(const uint64_t value);
+    void setValue(uint64_t value) override;
 };
 
 #endif //OPERAND_H

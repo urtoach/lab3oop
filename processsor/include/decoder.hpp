@@ -15,13 +15,13 @@ using CommandCreator = std::function<std::unique_ptr<CommandDescriptor>()>;
 
 class CodeTable {
 private:
-    std::unordered_map<unsigned char, CommandCreator> opcode_to_command_;
+    std::unordered_map<uint8_t, CommandCreator> opcode_to_command_;
 public:
     // constructor
     CodeTable();
     // destructor
     // other methods
-    std::unique_ptr<CommandDescriptor> commandCreate(unsigned char opcode);
+    std::unique_ptr<CommandDescriptor> commandCreate(uint8_t opcode);
 };
 
 //example
@@ -45,4 +45,4 @@ public:
     void decoder();
 };
 
-#endif //DECODER_H
+#endif // DECODER_H

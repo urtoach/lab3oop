@@ -1,10 +1,14 @@
 #include "../include/memory.hpp"
+#include "../include/memorytype.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
 
 // DataUnit 
-DataUnit::DataUnit(uint64_t value){
+
+template<class Type>
+DataUnit::DataUnit(Data<Type> value){
     value_ = value;
 }
 

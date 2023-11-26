@@ -14,10 +14,10 @@ void decoder();
 
 class CommandTable {
 private:
-    std::unordered_map<std::string, unsigned char> mnemomic_to_opcode_;
+    std::unordered_map<std::string, uint8_t> mnemomic_to_opcode_;
 public:
     CommandTable();
-    unsigned char getOpcode(const std::string& opcode) const;
+    uint8_t getOpcode(const std::string& opcode) const;
 };
 
 #endif // INTERPRETER_H

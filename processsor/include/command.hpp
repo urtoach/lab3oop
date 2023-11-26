@@ -1,6 +1,8 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
+#include "memorytype.hpp"
+
 #include <string>
 #include <array>
 
@@ -246,4 +248,4 @@ public:
 };
 
 
-#endif //COMMAND_H
+#endif // COMMAND_H

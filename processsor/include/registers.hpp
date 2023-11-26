@@ -90,4 +90,4 @@ public:
 
 
 
-#endif //REGISTER_H
+#endif // REGISTER_H

@@ -28,4 +28,4 @@ public:
     void execute();
 };
 
-#endif //THREAD_H
+#endif // THREAD_H

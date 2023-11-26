@@ -48,4 +48,4 @@ public:
 };
 
 
-#endif //PROCESSOR_H
+#endif // PROCESSOR_H

@@ -40,7 +40,7 @@ CodeTable::CodeTable() {
     //opcode_to_command_[0x19] = []() { return std::make_unique<CALLFunc>(); };
 }
 
-std::unique_ptr<CommandDescriptor> CodeTable::commandCreate(unsigned char opcode){
+std::unique_ptr<CommandDescriptor> CodeTable::commandCreate(uint8_t opcode){
     auto it = opcode_to_command_.find(opcode);
     if (it == opcode_to_command_.end()) {
         return it->second();

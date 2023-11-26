@@ -24,5 +24,5 @@ void Thread::setPC(const Register pc) {
 
 void Thread::execute() {
     program_counter_.setValue(program_counter_.getValue() + 1);
-    Decoder::Decoder decode()
+    void Decoder::decode();
 }

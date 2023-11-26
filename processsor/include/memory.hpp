@@ -8,9 +8,9 @@
 #include <string> 
 #include <registers.hpp>
 
-class DataUnit {
+/* class DataUnit {
 private:
-    uint64_t value_;
+    Data value_;
 public:
     // constructor
     DataUnit(uint64_t value);
@@ -19,28 +19,29 @@ public:
     uint64_t getValue() const;
     // setters
     void setValue(uint64_t value);
-};
+}; */
 
 class Memory {
 private: 
-    std::vector<DataUnit> data_;
+    std::vector<uint8_t> data_;
 public:
     // constructor
-    Memory(const std::vector<DataUnit>& data);
+    Memory(const std::vector<uint8_t>& data);
 
     // destructor
     virtual ~Memory() = default;
     
     // getters
-    std::vector<DataUnit> getData() const;
+    std::vector<uint8_t> getData() const;
 
     // setters
-    void setData(const std::vector<DataUnit>& data);
+    void setData(const std::vector<uint8_t>& data);
 
     // other methods
-    DataUnit read(size_t adress);
-    void write(size_t adress, uint64_t value);
+    std::vector<uint8_t> read(size_t adress);
+    void write(size_t adress, std::vector<uint8_t> bin_value);
 };
+
 
 class ProgramMemory : public Memory {
 public:
@@ -52,4 +53,4 @@ class DataMemory : public Memory {
     void dump();
 };
 
-#endif //MEMORY_H
+#endif // MEMORY_H

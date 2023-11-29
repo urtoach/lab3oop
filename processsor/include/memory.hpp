@@ -29,7 +29,7 @@ public:
     Memory(const std::vector<uint8_t>& data);
 
     // destructor
-    virtual ~Memory() = default;
+    ~Memory();
     
     // getters
     std::vector<uint8_t> getData() const;
@@ -39,7 +39,8 @@ public:
 
     // other methods
     std::vector<uint8_t> read(size_t adress);
-    void write(size_t adress, std::vector<uint8_t> bin_value);
+    //void write(size_t adress, std::vector<uint8_t> bin_value);
+    //void dump();
 };
 
 
@@ -51,6 +52,6 @@ public:
 
 class DataMemory : public Memory {
     void dump();
-};
+}; 
 
 #endif // MEMORY_H

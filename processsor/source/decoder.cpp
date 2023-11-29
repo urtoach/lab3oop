@@ -6,8 +6,9 @@
 #include "../include/command.hpp"
 
 // CodeTable methods
+template <class Type>
 CodeTable::CodeTable() {
-    opcode_to_command_[0x01] = []() { return std::make_unique<MOVFunc>(); };
+    opcode_to_command_[0x01] = []() { return std::make_unique<MOVFunc<Type>>(); };
     // arithmetic
     opcode_to_command_[0x02] = []() { return std::make_unique<ADDFunc>(); };
     opcode_to_command_[0x03] = []() { return std::make_unique<SUBFunc>(); };

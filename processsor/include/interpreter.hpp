@@ -20,4 +20,21 @@ public:
     uint8_t getOpcode(const std::string& opcode) const;
 };
 
+enum class TokenType {
+    LABEL,
+    OPERAND,
+    COMMAND,
+    DIRECTORY
+};
+
+class Token {
+    TokenType type_;
+    std::string name;
+};
+
+class TokenMap {
+
+};
+
+
 #endif // INTERPRETER_H

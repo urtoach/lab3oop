@@ -4,6 +4,8 @@
 #include "memorytype.hpp"
 #include <registers.hpp>
 #include <iostream>
+#include <functional>
+#include <memory>
 
 // 
 enum class OperandType{
@@ -45,11 +47,9 @@ public:
     OperandType getType() const;
     uint8_t getCode() const;
 
-    template<class Type>
-    virtual Data<Type> getValue() const;
-    virtual void setValue(Data<Type> value);
-
-    // other methods
+    // shizo-metodы
+    virtual Data getValue() const = 0;
+    virtual void setValue(const Data& value) = 0;
 };
 
 // child classes
@@ -62,15 +62,11 @@ public:
 
     // getter
     GPRegister getRegister() const;
-
-    template <class Type>
-    Data<Type> getValue() const override;
+    Data getValue() const override;
 
     // setter
     void setRegister(const GPRegister name);
-
-    template <class Type>
-    void setValue(Data<Type> value) override;
+    void setValue(const Data& value) override;
 };
 
 class MemoryOperand: public OperandDescriptor {
@@ -82,31 +78,25 @@ public:
 
     // getter
     size_t getAdress() const;
-
-    template <class Type>
-    Data<Type> getValue() const override;
+    Data getValue() const override;
 
     // setter
     void setAdress(const size_t adress);
-
-    template <class Type>
-    void setValue(Data<Type> value) override;
+    void setValue(const Data& value) override;
 };
 
-template <class Type>
 class ImmediateOperand: public OperandDescriptor {
 private:
-    Data<Type> value_;
+    Data value_;
 public:
     // constructors
-    ImmediateOperand(Data<Type> value);
+    ImmediateOperand(Data value);
     
     // getter
-    template <class Type>
-    Data<Type> getValue() const override;
+    Data getValue() const override;
 
     // setter
-    void setValue(Data<Type> value) override;
+    void setValue(Data value) override;
 };
 
 #endif // OPERAND_H

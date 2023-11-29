@@ -8,6 +8,7 @@
 #include "registers.hpp"
 #include "thread.hpp"
 #include "memory.hpp"
+#include "command.hpp"
 
 constexpr int NUMBER_OF_FLAGS = 4;
 
@@ -19,7 +20,10 @@ private:
     std::vector<Thread> threads_;
     ProgramMemory program_;
     DataMemory data_;
-public:
+    //Memory data_;
+    //Memory program_memory_;
+    //std::vector<std::unique_ptr<CommandDescriptor>> program;
+public: 
     // constructor
     Processor();
 
@@ -32,6 +36,8 @@ public:
     std::vector<Thread> getThreads() const;
     ProgramMemory getProgram();
     DataMemory getData();
+    //Memory getProgramMemory();
+    //Memory getDataMemory();
 
     // setters
     void setFlags(const std::array<bool, NUMBER_OF_FLAGS> flags);

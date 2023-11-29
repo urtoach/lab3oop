@@ -18,14 +18,17 @@ private:
     std::unordered_map<uint8_t, CommandCreator> opcode_to_command_;
 public:
     // constructor
+    template <class Type>
     CodeTable();
     // destructor
     // other methods
+    template <class Type>
     std::unique_ptr<CommandDescriptor> commandCreate(uint8_t opcode);
 };
 
 //example
 //std::unique_ptr<CommandDescriptor> command = op_table.commandCreate(0x01);
+
 
 class Decoder {
 private:

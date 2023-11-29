@@ -2,26 +2,54 @@
 #define MEMORY_TYPE_H
 
 #include <iostream>
+#include <variant>
+#include <unordered_map>
+#include <typeinfo>
+#include <typeindex>
+#include <string>
+#include <utility>
 
-template<class Type>
+enum class DataType {
+    BYTE = 0, 
+    CHAR = 1,
+    INT = 2,
+    UINT = 3,
+    LONG = 4,
+    ULONG = 5,
+    FLOAT = 6,
+    DOUBLE = 7,
+    LDOUBLE = 8,
+    UNKNOWN
+};
+
+using VariantType = std::variant<unsigned char, char, int, unsigned int, long, unsigned long, float, double, long double>;
+
 class Data {
 private:
-    Type value_;
+    DataType type_;
+    VariantType value_;
     std::vector<uint8_t> bin_value_;
 
+    std::pair<DataType, size_t> getType_() const;
+
     void initBinary_();
-    void udateValue_();
+    void updateValue_();
+
+    template<class T>
+    void initFromBinary_();
+
 public:
     // constructor
-    Data(Type value) : value_(value);
+    Data(VariantType value) : value_(value), type_(getType_().first) {};
+    Data(DataType type, const std::vector<uint8_t>& bin_value) : type_(type) {};
 
     // getters
-    Type getValue() const;
+    VariantType getValue() const;
     std::vector<uint8_t> getBinary() const;
 
     //setter
-    void setValue(const Type& value);
-    void setBinary(const std::vector<uint8_t>& bin_value);
+    void setValue(const VariantType& value);
+    void setBinary(DataType type, const std::vector<uint8_t>& bin_value);
 };
 
 #endif // MEMORY_TYPE_H

@@ -35,7 +35,7 @@ std::array<std::shared_ptr<OperandDescriptor>, 2> BinaryCommand::getOperands() c
 }
 
 void BinaryCommand::setOperands(const std::shared_ptr<OperandDescriptor>& operand1,
-        const std::shared_ptr<OperandDescriptor>& operand2) {
+        const std::shared_ptr<OperandDescriptor<Type>>& operand2) {
     operands_[0] = operand1;
     operands_[1] = operand2;
 }

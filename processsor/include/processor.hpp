@@ -20,9 +20,7 @@ private:
     std::vector<Thread> threads_;
     ProgramMemory program_;
     DataMemory data_;
-    //Memory data_;
-    //Memory program_memory_;
-    //std::vector<std::unique_ptr<CommandDescriptor>> program;
+    Interpreter interpreter_;
 public: 
     // constructor
     Processor();
@@ -47,7 +45,7 @@ public:
     void setData(const DataMemory& data);
     
     // other methods
-    void loadProgram(std::string &file);
+    void loadProgram(std::string &file, Interpreter& interpreter);
     void createThread();
     void editProcessor();
     void execute();

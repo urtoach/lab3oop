@@ -7,34 +7,55 @@
 #include <string>
 #include <functional>
 
-void lexer();
-void parser(std::ifstream& file);
-void interpritator();
-void decoder();
-
-class CommandTable {
-private:
-    std::unordered_map<std::string, uint8_t> mnemomic_to_opcode_;
-public:
-    CommandTable();
-    uint8_t getOpcode(const std::string& opcode) const;
-};
-
+// token type for lexer
 enum class TokenType {
+    MNEMONIC,
+    REGISTER,
+    ADDRESS,
+    NUMBER,
     LABEL,
-    OPERAND,
-    COMMAND,
-    DIRECTORY
+    COMMENT,
+    END,
+    UNKNOWN
 };
 
-class Token {
-    TokenType type_;
+// token
+struct Token {
+    TokenType type;
     std::string name;
 };
 
-class TokenMap {
+// class lexer
+class Lexer {
+private:
+    std::vector<Token> tokens_;
+    size_t current_pos_;
+    std::unordered_map<std::string, TokenType> token_type_table_;
 
+    // utility methods
+    void createTable_();
+
+    bool isInt_(const std::string& num);
+    bool isDouble_(const std::string& num);
+
+    TokenType getTokenType_(const std::string& token) const;
+    void tokenizeLine(const std::string& line);
+    Token createToken_(const std::string& token);
+public:
+    // constructor
+    explicit Lexer(const std::string& filename);
+    // getter
+    Token getNext();
 };
 
+// class Parser
+class Parser {
+private:
+    Lexer lexer_;
+    void processToken_(const Token& token);
+public:
+    explicit Parser(const std::string& filename) : lexer_(filename) {}
+    void parse();
+};
 
 #endif // INTERPRETER_H

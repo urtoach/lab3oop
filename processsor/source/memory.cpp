@@ -5,47 +5,43 @@
 #include <sstream>
 #include <fstream>
 
-// DataUnit 
-
-template<class Type>
-DataUnit::DataUnit(Data<Type> value){
-    value_ = value;
-}
-
-uint64_t DataUnit::getValue() const {
-    return value_;
-}
-
-void DataUnit::setValue(uint64_t value) {
-    value_ = value;
-}
-
-
 //=====================================================//
 
 // Memory
 // constructor
-Memory::Memory(const std::vector<DataUnit>& data){
+Memory::Memory(const std::vector<uint8_t>& data){
     data_ = data; 
 }
 
 // getter
-std::vector<DataUnit> Memory::getData() const {
+std::vector<uint8_t> Memory::getData() const {
     return data_;
 }
 
 // setter
-void Memory::setData(const std::vector<DataUnit>& data){
+void Memory::setData(const std::vector<uint8_t>& data){
     data_ = data;
 }
 
 // other methods 
-DataUnit Memory::read(size_t adress) {
-    return data_[adress];
+Data Memory::read(size_t adress) {
+    DataType type = static_cast<DataType>(data_[adress]);
+    TypeTable table;
+    size_t size_type = table.getSize(type);
+    std::vector<uint8_t> bin_value(size_type);
+    for (size_t i = 0; i < size_type; i++){
+        bin_value.push_back(data_[adress + 1 + i]);
+    }
+    return Data(type, bin_value);
 }
 
-void Memory::write(size_t adress, uint64_t value){
-    data_[adress].setValue(value);
+void Memory::write(size_t adress, Data value){
+    TypeTable table;
+    size_t size_type = table.getSize(value.getType());
+    data_[adress] = static_cast<size_t>(value.getType());
+    for (size_t i = 0; i < size_type; i++){
+        data_[adress + 1 + i] = value.getBinary()[i];
+    }
 }
 
 //=====================================================//

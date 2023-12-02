@@ -11,8 +11,9 @@ Data::Data(DataType type, const std::vector<uint8_t>& bin_value) : type_(type) {
 }
 
 void Data::initBinary_() {
-    bin_value_.resize(getType_().second);
-    std::memcpy(bin_value_.data(), &value_, getType_().second);
+    TypeTable table;
+    bin_value_.resize(table.getSize(getType_()));
+    std::memcpy(bin_value_.data(), &value_, table.getSize(getType_()));
 }
 
 template<class T>
@@ -23,26 +24,26 @@ void Data::initFromBinary_() {
     std::memcpy(&value_, bin_value_.data(), sizeof(T));
 } 
 
-std::pair<DataType, size_t> Data::getType_() const {
-    static std::unordered_map<std::type_index, std::pair<DataType, size_t>> type_map {
-        { typeid(char), {DataType::CHAR, sizeof(char)} },
-        { typeid(int), {DataType::INT, sizeof(int)} },
-        { typeid(unsigned int), {DataType::UINT, sizeof(unsigned int)} },
-        { typeid(long), {DataType::LONG, sizeof(long)} },
-        { typeid(unsigned long), {DataType::ULONG, sizeof(unsigned long)} },
-        { typeid(float), {DataType::FLOAT, sizeof(float)} },
-        { typeid(double), {DataType::DOUBLE, sizeof(double)} },
-        { typeid(long double), {DataType::LDOUBLE, sizeof(long double)} }
+DataType Data::getType() const {
+    static std::unordered_map<std::type_index, DataType> type_map {
+        { typeid(char), DataType::CHAR },
+        { typeid(int), DataType::INT },
+        { typeid(unsigned int), DataType::UINT },
+        { typeid(long), DataType::LONG },
+        { typeid(unsigned long), DataType::ULONG },
+        { typeid(float), DataType::FLOAT },
+        { typeid(double), DataType::DOUBLE },
+        { typeid(long double), DataType::LDOUBLE }
     };
 
     const std::type_index type = typeid(value_);
     auto it = type_map.find(type);
-    return (it != type_map.end()) ? it->second : std::pair{ DataType::UNKNOWN, size_t(0) };
+    return (it != type_map.end()) ? it->second : DataType::UNKNOWN;
 }
 
 
 void Data::updateValue_() {
-    switch(getType_().first){
+    switch(getType_()){
         case DataType::BYTE: {
             initFromBinary_<uint8_t>();
             break;
@@ -52,7 +53,7 @@ void Data::updateValue_() {
 }
 
 // constructor
-Data::Data(VariantType value) : value_(value), type_(getType_().first) {
+Data::Data(VariantType value) : value_(value), type_(getType_()) {
     initBinary_();
 }
 
@@ -68,12 +69,13 @@ std::vector<uint8_t> Data::getBinary() const {
 //setter
 void Data::setValue(const VariantType& value) {
     value_ = value;
-    type_ = getType_().first;
+    type_ = getType_();
     initBinary_();
 }
 
 void Data::setBinary(DataType type, const std::vector<uint8_t>& bin_value){
-    if (bin_value_.size() != getType_().second) {
+    TypeTable table;
+    if (bin_value_.size() != table.getSize(getType_())) {
         throw std::runtime_error("invalid memory type");
     }
     bin_value_ = bin_value;

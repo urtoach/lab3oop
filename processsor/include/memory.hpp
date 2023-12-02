@@ -38,8 +38,8 @@ public:
     void setData(const std::vector<uint8_t>& data);
 
     // other methods
-    std::vector<uint8_t> read(size_t adress);
-    //void write(size_t adress, std::vector<uint8_t> bin_value);
+    Data read(size_t adress);
+    void write(size_t adress, Data bin_value);
     //void dump();
 };
 

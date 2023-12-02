@@ -2,88 +2,124 @@
 #include <fstream>
 #include <sstream> 
 #include <string>
+#include <unordered_map>
 #include "../include/interpreter.hpp"
 #include "../include/processor.hpp"
 
 
-// CommandTable methods
-CommandTable::CommandTable(){
-    mnemomic_to_opcode_["mov"] = 0x01;
-
-    mnemomic_to_opcode_["add"] = 0x02;
-    mnemomic_to_opcode_["sub"] = 0x03;
-    mnemomic_to_opcode_["inc"] = 0x04;
-    mnemomic_to_opcode_["dec"] = 0x05;
-
-    mnemomic_to_opcode_["not"] = 0x06;
-    mnemomic_to_opcode_["and"] = 0x07;
-    mnemomic_to_opcode_["or"] = 0x08;
-    mnemomic_to_opcode_["xor"] = 0x09;
-    mnemomic_to_opcode_["cmp"] = 0x0A;
-
-    mnemomic_to_opcode_["shl"] = 0x0B;
-    mnemomic_to_opcode_["shr"] = 0x0C;
-
-    mnemomic_to_opcode_["jmp"] = 0x0D;
-    mnemomic_to_opcode_["je"] = 0x0E;
-    mnemomic_to_opcode_["jne"] = 0x0F;
-    mnemomic_to_opcode_["jg"] = 0x10;
-    mnemomic_to_opcode_["jge"] = 0x11;
-    mnemomic_to_opcode_["jl"] = 0x12;
-    mnemomic_to_opcode_["jle"] = 0x13;
-
-    mnemomic_to_opcode_["db"] = 0x14;
-    mnemomic_to_opcode_["dw"] = 0x15;
-    mnemomic_to_opcode_["dd"] = 0x16;
-
-    mnemomic_to_opcode_["hlt"] = 0x17;
-    //mnemomic_to_opcode_["ret"] = 0x18;
-    //mnemomic_to_opcode_["call"] = 0x19;
-}
-
-uint8_t CommandTable::getOpcode(const std::string& mnemonic) const {
-    auto it = mnemomic_to_opcode_.find(mnemonic);
-    if (it == mnemomic_to_opcode_.end()) {
-        return it->second;
+// Lexer
+//==================================================//
+// construcor
+explicit Lexer::Lexer(const std::string& filename){
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::invalid_argument("invalid filename");
     }
-    return 0x00;
-}
 
-
-// other methods
-void parser(std::ifstream& file){
-    std::string line;
+    std::string line; 
     while (std::getline(file, line)) {
-        // if empty or comment
-        if (line.empty() || line.front() == ';') {
-            continue;
-        }
-        if (line.back() == ':'){
-            // label
-        }
-
-        std::istringstream iss(line);
-        std::string mnemonic;
-        iss >> mnemonic;
-
-        CommandTable code_table;
-        uint8_t opcode = code_table.getOpcode(mnemonic);
-        if (opcode != 0x00){
-            
-        }
-        
-        else {
-            throw std::runtime_error("");
-        }
-
-        std::string operand;
-        while (iss >> operand) {
-            if (operand.front() == '$'){
-                // immediate
-            }
-            
-        }        
-
+        tokenizeLine(line);
     }
+    tokens_.push_back({ TokenType::END, "" });
     file.close();
+    createTable_();
+}
+
+void Lexer::createTable_(){
+    token_type_table_["mov"] = TokenType::MNEMONIC;
+
+    token_type_table_["add"] = TokenType::MNEMONIC;
+    token_type_table_["sub"] = TokenType::MNEMONIC;
+    token_type_table_["inc"] = TokenType::MNEMONIC;
+    token_type_table_["dec"] = TokenType::MNEMONIC;
+
+    token_type_table_["not"] = TokenType::MNEMONIC;
+    token_type_table_["and"] = TokenType::MNEMONIC;
+    token_type_table_["or"] = TokenType::MNEMONIC;
+    token_type_table_["xpr"] = TokenType::MNEMONIC;
+    token_type_table_["cmp"] = TokenType::MNEMONIC;
+
+    token_type_table_["shl"] = TokenType::MNEMONIC;
+    token_type_table_["shr"] = TokenType::MNEMONIC;
+
+    token_type_table_["jmp"] = TokenType::MNEMONIC;
+    token_type_table_["je"] = TokenType::MNEMONIC;
+    token_type_table_["jne"] = TokenType::MNEMONIC;
+    token_type_table_["jg"] = TokenType::MNEMONIC;
+    token_type_table_["jge"] = TokenType::MNEMONIC;
+    token_type_table_["jl"] = TokenType::MNEMONIC;
+    token_type_table_["jle"] = TokenType::MNEMONIC;
+
+    token_type_table_["db"] = TokenType::MNEMONIC;
+    token_type_table_["dw"] = TokenType::MNEMONIC;
+    token_type_table_["dd"] = TokenType::MNEMONIC;
+
+    token_type_table_["hlt"] = TokenType::MNEMONIC;
+
+    token_type_table_["%rax"] = TokenType::REGISTER;
+    token_type_table_["%rbx"] = TokenType::REGISTER;
+    token_type_table_["%rcx"] = TokenType::REGISTER;
+    token_type_table_["%rdx"] = TokenType::REGISTER;
+    token_type_table_["%rsp"] = TokenType::REGISTER;
+    token_type_table_["%rbp"] = TokenType::REGISTER;
+    token_type_table_["%rsi"] = TokenType::REGISTER;
+    token_type_table_["%rdi"] = TokenType::REGISTER;
+    token_type_table_["%r8"] = TokenType::REGISTER;
+    token_type_table_["%r9"] = TokenType::REGISTER;
+    token_type_table_["%r10"] = TokenType::REGISTER;
+    token_type_table_["%r11"] = TokenType::REGISTER;
+    token_type_table_["%r12"] = TokenType::REGISTER;
+    token_type_table_["%r13"] = TokenType::REGISTER;
+    token_type_table_["%r14"] = TokenType::REGISTER;
+}
+
+TokenType Lexer::getTokenType_(const std::string& token) const {
+    if (token_type_table_.find(token) != token_type_table_.end()) {
+            return token_type_table_.at(token);
+        }
+    return TokenType::UNKNOWN;
+}
+
+Token Lexer::getNext() {
+    if (current_pos_ < tokens_.size()) {
+        return tokens_[current_pos_++];
+    }
+    return { TokenType::END, "" };
+}
+
+bool Lexer::isInt_(const std::string& num) {
+    return !num.empty() && num.find_first_not_of("0123456789") == std::string::npos;
+}
+
+bool Lexer::isDouble_(const std::string& num) {
+    char* endptr = nullptr;
+    strtod(num.c_str(), &endptr);
+    return !num.empty() && *endptr == '\0';
+}
+
+Token Lexer::createToken_(const std::string& token) {
+    if (token.front() == ';') {
+        return { TokenType::COMMENT, token };
+    }
+    if (token.back() == ':') {
+        return { TokenType::LABEL, token };
+    }
+    if (token.front() == '[' && token.back() == ']'){
+        std::string address = token.substr(1, token.size() - 2);
+        if (isInt_(address)) {
+            return { TokenType::ADDRESS, address };
+        }
+    }
+    if (isDouble_(token)){
+        return { TokenType::NUMBER, token };
+    }
+    return { getTokenType_(token), token };
+}
+
+void Lexer::tokenizeLine(const std::string& line) {
+    std::istringstream iss(line);
+    std::string token;
+    while(iss >> token) {
+        tokens_.push_back(createToken_(token));
+    }
 }

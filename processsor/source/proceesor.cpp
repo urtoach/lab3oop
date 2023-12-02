@@ -62,13 +62,13 @@ void Processor::setData(const DataMemory& data) {
 //====================================================//
 
 // other methods
-void loadProgram(std::string &filename){
+void loadProgram(std::string &filename, Interpreter& interpreter){
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "unable to open file: " << filename << std::endl;
         throw std::runtime_error("unable to open file");
     }
-    parser(file);
+    interpreter.lexer(file);
 }
 
 //====================================================//

@@ -25,7 +25,7 @@ explicit Lexer::Lexer(const std::string& filename){
     createTable_();
 }
 
-void Lexer::createTable_(){
+void Lexer::createTable_() {
     token_type_table_["mov"] = TokenType::MNEMONIC;
 
     token_type_table_["add"] = TokenType::MNEMONIC;
@@ -123,3 +123,70 @@ void Lexer::tokenizeLine(const std::string& line) {
         tokens_.push_back(createToken_(token));
     }
 }
+
+//==================================================//
+
+// Parser
+//==================================================//
+
+// utility methods
+void Parser::processToken_(const Token& token) {
+    switch(token.type) {
+        case TokenType::ADDRESS:{}
+        case TokenType::MNEMONIC:{}
+        case TokenType::REGISTER:{}
+        case TokenType::NUMBER:{}
+        case TokenType::LABEL:{}
+        case TokenType::COMMENT:{}
+        case TokenType::END:{}
+        case TokenType::UNKNOWN:{}
+    }
+}
+
+void Parser::parse(ProgramMemory& program, DataMemory& data) {
+    Token token;
+    do {
+        token = lexer_.getNext();
+        processToken_(token);
+    } while((token.type != TokenType::UNKNOWN) || (token.type != TokenType::END));
+}
+
+void Parser::createTable_() {
+    opcode_table_["mov"] = 0x00;
+
+    opcode_table_["add"] = 0x01;
+    opcode_table_["sub"] = 0x02;
+    opcode_table_["inc"] = 0x03;
+    opcode_table_["dec"] = 0x04;
+
+    opcode_table_["not"] = 0x05;
+    opcode_table_["and"] = 0x06;
+    opcode_table_["or"] = 0x07;
+    opcode_table_["xpr"] = 0x08;
+    opcode_table_["cmp"] = 0x09;
+
+    opcode_table_["shl"] = 0x0A;
+    opcode_table_["shr"] = 0x0B;
+
+    opcode_table_["jmp"] = 0x0C;
+    opcode_table_["je"] = 0x0D;
+    opcode_table_["jne"] = 0x0E;
+    opcode_table_["jg"] = 0x0F;
+    opcode_table_["jge"] = 0x10;
+    opcode_table_["jl"] = 0x11;
+    opcode_table_["jle"] = 0x12;
+
+    opcode_table_["db"] = 0x13;
+    opcode_table_["dw"] = 0x14;
+    opcode_table_["dd"] = 0x15;
+
+    opcode_table_["hlt"] = 0x16;
+}
+
+uint8_t Parser::getOpcode_(const std::string& mnemonic) {
+    if (opcode_table_.find(mnemonic) != opcode_table_.end()) {
+            return opcode_table_.at(mnemonic);
+        }
+    return 0xFF;
+}
+

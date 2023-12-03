@@ -7,6 +7,9 @@
 #include <string>
 #include <functional>
 
+#include "memory.hpp"
+#include "memorytype.hpp"
+
 // token type for lexer
 enum class TokenType {
     MNEMONIC,
@@ -53,9 +56,15 @@ class Parser {
 private:
     Lexer lexer_;
     void processToken_(const Token& token);
+
+    std::unordered_map<std::string, uint8_t> opcode_table_;
+    // table methods
+    void createTable_();
+    uint8_t getOpcode_(const std::string& mnemonic);
 public:
+
     explicit Parser(const std::string& filename) : lexer_(filename) {}
-    void parse();
+    void parse(ProgramMemory& program, DataMemory& data);
 };
 
 #endif // INTERPRETER_H

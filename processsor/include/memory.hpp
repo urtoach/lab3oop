@@ -7,22 +7,11 @@
 #include <cstdint>
 #include <string> 
 #include <registers.hpp>
+#include "memorytype.hpp"
 
-/* class DataUnit {
-private:
-    Data value_;
-public:
-    // constructor
-    DataUnit(uint64_t value);
-
-    // getters
-    uint64_t getValue() const;
-    // setters
-    void setValue(uint64_t value);
-}; */
-
+ 
 class Memory {
-private: 
+protected: 
     std::vector<uint8_t> data_;
 public:
     // constructor
@@ -33,13 +22,17 @@ public:
     
     // getters
     std::vector<uint8_t> getData() const;
+    size_t getSize() { return data_.size(); }
 
     // setters
     void setData(const std::vector<uint8_t>& data);
 
     // other methods
     Data read(size_t adress);
-    void write(size_t adress, Data bin_value);
+    void write(const Data& bin_value);
+    void write(size_t adress, const Data& bin_value);
+    void write(const std::vector<uint8_t>& bin_value);
+    void write(size_t adress, const std::vector<uint8_t>& bin_value);
     //void dump();
 };
 

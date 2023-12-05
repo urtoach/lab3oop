@@ -96,7 +96,7 @@ public:
     Data getValue() const override;
 
     // setter
-    void setValue(Data value) override;
+    void setValue(const Data& value) override;
 };
 
 #endif // OPERAND_H

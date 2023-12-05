@@ -19,6 +19,10 @@ enum class _Type {
     FLOAT = 6,
     DOUBLE = 7,
     LDOUBLE = 8,
+    REGISTER = 9,
+    ADDRESS = 10,
+    LABEL = 11,
+    MNEMONIC = 12,
     UNKNOWN
 };
 
@@ -43,9 +47,13 @@ public:
         type_map_[typeid(long double)] = { _Type::LDOUBLE, sizeof(long double) };
     }
     DataType getType(VariantType& value) const;
+
+    std::array<size_t, 14> sizeof_{ sizeof(uint8_t), sizeof(char), sizeof(int),
+        sizeof(unsigned int), sizeof(long), sizeof(unsigned long), sizeof(float),
+        sizeof(double), sizeof(long double), static_cast<size_t>(1), sizeof(size_t), sizeof(size_t), static_cast<size_t>(1), static_cast<size_t>(0) };
 };
 
-using VariantType = std::variant<unsigned char, char, int, unsigned int, long, unsigned long, float, double, long double>;
+using VariantType = std::variant<uint8_t, char, int, unsigned int, long, unsigned long, float, double, long double>;
 
 class Data {
 private:
@@ -67,6 +75,7 @@ public:
     Data(DataType type, const std::vector<uint8_t>& bin_value) : type_(type) {};
 
     // getters
+    DataType getType() const { return type_; }
     VariantType getValue() const;
     std::vector<uint8_t> getBinary() const;
 

@@ -2,9 +2,25 @@
 #include <fstream>
 #include <sstream> 
 #include <string>
+#include <cstring>
 #include <unordered_map>
 #include "../include/interpreter.hpp"
 #include "../include/processor.hpp"
+
+
+// Label Map
+//==================================================//
+void LabelMap::pushLabel(const std::string& label, size_t address) {
+    labels_[label] = address;
+}
+
+size_t LabelMap::getAddress(const std::string& label) {
+    auto it = labels_.find(label);
+    if (it != labels_.end()) { return it->second; } 
+    else { return 0; }
+}
+
+//==================================================//
 
 
 // Lexer
@@ -102,7 +118,7 @@ Token Lexer::createToken_(const std::string& token) {
         return { TokenType::COMMENT, token };
     }
     if (token.back() == ':') {
-        return { TokenType::LABEL, token };
+        return { TokenType::LABEL, token.substr(0, token.size() - 1) };
     }
     if (token.front() == '[' && token.back() == ']'){
         std::string address = token.substr(1, token.size() - 2);
@@ -112,6 +128,9 @@ Token Lexer::createToken_(const std::string& token) {
     }
     if (isDouble_(token)){
         return { TokenType::NUMBER, token };
+    }
+    if (labels.getAddress(token) != 0) {
+        return { TokenType::LABEL, token };
     }
     return { getTokenType_(token), token };
 }
@@ -130,24 +149,84 @@ void Lexer::tokenizeLine(const std::string& line) {
 //==================================================//
 
 // utility methods
-void Parser::processToken_(const Token& token) {
+void Parser::processToken_(const Token& token, ProgramMemory& program, DataMemory& data) {
+    std::vector<uint8_t> binary;
     switch(token.type) {
-        case TokenType::ADDRESS:{}
-        case TokenType::MNEMONIC:{}
-        case TokenType::REGISTER:{}
-        case TokenType::NUMBER:{}
-        case TokenType::LABEL:{}
-        case TokenType::COMMENT:{}
-        case TokenType::END:{}
-        case TokenType::UNKNOWN:{}
+        case TokenType::ADDRESS:{
+            int value = std::atoi(token.name.c_str());
+            binary.resize(sizeof(int));
+            std::memcpy(binary.data(), &value, sizeof(int));
+            binary.insert(binary.begin(), static_cast<uint8_t>(_Type::ADDRESS));
+            break;
+        }
+        case TokenType::MNEMONIC:{
+            uint8_t opcode = getOpcode_(token.name);
+            if (opcode == 0xFF){
+                throw;
+            }
+            binary.push_back(opcode);
+            binary.insert(binary.begin(), static_cast<uint8_t>(_Type::MNEMONIC));
+            break;
+        }
+        case TokenType::REGISTER:{
+            uint8_t rcode = getOpcode_(token.name);
+            if (rcode == 0xFF){
+                throw;
+            }
+            binary.push_back(rcode);
+            binary.insert(binary.begin(), static_cast<uint8_t>(_Type::REGISTER));
+            break;
+        }
+        case TokenType::NUMBER:{
+            if (lexer_.isInt_(token.name)){
+                int value = std::stoi(token.name.c_str());
+                binary.resize(sizeof(int));
+                std::memcpy(binary.data(), &value, sizeof(int));
+                binary.insert(binary.begin(), static_cast<uint8_t>(_Type::INT));
+            }
+            else {
+                double value = std::stod(token.name.c_str());
+                binary.resize(sizeof(double));
+                std::memcpy(binary.data(), &value, sizeof(double));
+                binary.insert(binary.begin(), static_cast<uint8_t>(_Type::DOUBLE));
+            }
+            break;
+        }
+        case TokenType::LABEL:{
+            size_t address = lexer_.labels.getAddress(token.name);
+            if (address == 0) { 
+                address = program.getSize();
+                lexer_.labels.pushLabel(token.name, address);
+                binary.resize(sizeof(size_t));
+                binary.insert(binary.begin(), static_cast<uint8_t>(_Type::LABEL));
+            }
+            else {
+                binary.resize(sizeof(size_t));
+                std::memcpy(binary.data(), &address, sizeof(size_t));
+                binary.insert(binary.begin(), static_cast<uint8_t>(_Type::LABEL));
+            }
+            break;
+        }
+        case TokenType::COMMENT:{
+            break;
+        }
+        case TokenType::END:{
+            uint8_t opcode = getOpcode_("hlt");
+            binary.push_back(opcode);
+            break;
+        }
+        case TokenType::UNKNOWN:{
+            throw;
+        }
     }
+    program.write(binary);
 }
 
 void Parser::parse(ProgramMemory& program, DataMemory& data) {
     Token token;
     do {
         token = lexer_.getNext();
-        processToken_(token);
+        processToken_(token, program, data);
     } while((token.type != TokenType::UNKNOWN) || (token.type != TokenType::END));
 }
 
@@ -181,6 +260,22 @@ void Parser::createTable_() {
     opcode_table_["dd"] = 0x15;
 
     opcode_table_["hlt"] = 0x16;
+
+    opcode_table_["%rax"] = 0;
+    opcode_table_["%rbx"] = 1;
+    opcode_table_["%rcx"] = 2;
+    opcode_table_["%rdx"] = 3;
+    opcode_table_["%rsp"] = 4;
+    opcode_table_["%rbp"] = 5;
+    opcode_table_["%rsi"] = 6;
+    opcode_table_["%rdi"] = 7;
+    opcode_table_["%r8"] = 8;
+    opcode_table_["%r9"] = 9;
+    opcode_table_["%r10"] = 10;
+    opcode_table_["%r11"] = 11;
+    opcode_table_["%r12"] = 12;
+    opcode_table_["%r13"] = 13;
+    opcode_table_["%r14"] = 14;
 }
 
 uint8_t Parser::getOpcode_(const std::string& mnemonic) {
